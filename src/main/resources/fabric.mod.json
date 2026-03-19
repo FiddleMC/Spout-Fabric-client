@@ -1,17 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "fiddle",
+  "id": "fiddle-client",
   "version": "${version}",
-  "name": "Fiddle",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Fiddle client",
+  "description": "Automatically downloads and install custom blocks and items when joining Fiddle servers",
   "authors": [
-    "Me!"
+    "Martijn Muijsers",
+    "Other FiddleMC contributors"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://fiddlemc.org/",
+    "sources": "https://github.com/FiddleMC/Fiddle-mod"
   },
-  "license": "CC0-1.0",
+  "license": "Mostly GPL-3.0, see LICENSE.md for details",
   "icon": "assets/fiddle/icon.png",
   "environment": "*",
   "entrypoints": {

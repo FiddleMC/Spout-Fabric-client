@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="logo.png" alt="Fiddle logo" width="21%" align="right">
+  <img src="src/main/resources/assets/fiddle/icon.png" alt="Fiddle logo" width="21%" align="right">
   <h1>
     Fiddle (Fabric)
   </h1>
