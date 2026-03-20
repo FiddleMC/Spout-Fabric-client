@@ -6,6 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.jspecify.annotations.Nullable;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A central access point for modifying the registries we wish to modify.
@@ -42,13 +43,13 @@ public final class TemporaryRegistryModifiers {
     }
 
     public static void addCustomContent(
-        List<Pair<ResourceKey<Block>, Block>> blocks,
-        List<Pair<ResourceKey<Item>, Item>> items
+        Supplier<List<Pair<ResourceKey<Block>, Block>>> blocks,
+        Supplier<List<Pair<ResourceKey<Item>, Item>>> items
     ) {
         System.out.println("Adding custom content");
         initializeIfNecessary();
-        blockRegistryModifier.addAndRefreeze(blocks);
-        itemRegistryModifier.addAndRefreeze(items);
+        blockRegistryModifier.addAndRefreeze(blocks.get());
+        itemRegistryModifier.addAndRefreeze(items.get());
     }
 
     public static void removeCustomContent() {

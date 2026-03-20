@@ -3,15 +3,19 @@ package org.fiddlemc.fiddle.client.moredatadriven;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import org.fiddlemc.fiddle.client.moredatadriven.mixin.HolderSetNamedAccessor;
 import org.fiddlemc.fiddle.client.moredatadriven.mixin.MappedRegistryAccessor;
 import org.jspecify.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -24,6 +28,7 @@ public abstract class TemporaryRegistryModifier<T, R extends MappedRegistry<T>> 
 
     public final R registry;
 
+    private @Nullable Map<TagKey<T>, HolderSet.Named<T>> originalFrozenTags = null;
     private @Nullable List<Pair<ResourceKey<T>, T>> resourcesAdded = null;
 
     TemporaryRegistryModifier(R registry) {
@@ -52,6 +57,7 @@ public abstract class TemporaryRegistryModifier<T, R extends MappedRegistry<T>> 
     }
 
     public void add(List<Pair<ResourceKey<T>, T>> resources) {
+        this.originalFrozenTags = this.copyFrozenTags(this.getRegistryAccessor().getFrozenTags());
         if (!resources.isEmpty()) {
             this.resourcesAdded = resources;
             for (Pair<ResourceKey<T>, T> resource : resources) {
@@ -72,6 +78,12 @@ public abstract class TemporaryRegistryModifier<T, R extends MappedRegistry<T>> 
         for (int i = this.resourcesAdded.size() - 1; i >= 0; i--) {
             Pair<ResourceKey<T>, T> resource = this.resourcesAdded.get(i);
             this.remove(resource.left(), resource.right());
+        }
+        if (this.originalFrozenTags != null) {
+            Map<TagKey<T>, HolderSet.Named<T>> frozenTags = this.getRegistryAccessor().getFrozenTags();
+            frozenTags.clear();
+            frozenTags.putAll(this.copyFrozenTags(this.originalFrozenTags));
+            this.originalFrozenTags = null;
         }
         this.refreeze();
         this.resourcesAdded = null;
@@ -112,6 +124,19 @@ public abstract class TemporaryRegistryModifier<T, R extends MappedRegistry<T>> 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Map<TagKey<T>, HolderSet.Named<T>> copyFrozenTags(Map<TagKey<T>, HolderSet.Named<T>> source) {
+        Map<TagKey<T>, HolderSet.Named<T>> target = new IdentityHashMap<>();
+        for (Map.Entry<TagKey<T>, HolderSet.Named<T>> entry : source.entrySet()) {
+            HolderSet.Named<T> holderSet = this.getRegistryAccessor().callCreateTag(entry.getValue().key());
+            @Nullable List<Holder<T>> contents = ((HolderSetNamedAccessor<T>) entry.getValue()).getContents();
+            if (contents != null) {
+                ((HolderSetNamedAccessor<T>) holderSet).callBind(new ArrayList<>(contents));
+            }
+            target.put(entry.getKey(), holderSet);
+        }
+        return target;
     }
 
 }

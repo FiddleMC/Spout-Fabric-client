@@ -16,8 +16,9 @@ import org.fiddlemc.fiddle.client.moredatadriven.TemporaryRegistryModifiers;
 import org.fiddlemc.fiddle.impl.branding.FiddleNamespace;
 import org.fiddlemc.fiddle.impl.moredatadriven.clientmod.ClientModCustomContent;
 import org.fiddlemc.fiddle.impl.moredatadriven.clientmod.ClientModCustomContentPacketPayload;
+import org.fiddlemc.fiddle.impl.moredatadriven.minecraft.type.WithItemProperties;
 import org.fiddlemc.fiddle.impl.moredatadriven.minecraft.type.mixin.BlockBehaviourPropertiesAccessor;
-import java.util.List;
+import org.fiddlemc.fiddle.impl.moredatadriven.minecraft.type.mixin.ItemPropertiesAccessor;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -80,17 +81,20 @@ public final class FiddleProtocol {
             System.out.println("Parsed content type: " + customContent.getClass().getName());
             System.out.println("Parsed content: " + customContent);
             TemporaryRegistryModifiers.addCustomContent(
-                customContent.blocks().stream().map(block -> Pair.of(((BlockBehaviourPropertiesAccessor) block.properties()).getId(), block)).toList(),
-                List.of()//TODO
+                () -> customContent.getParsedBlocks().stream().map(block -> Pair.of(((BlockBehaviourPropertiesAccessor) block.properties()).getId(), block)).toList(),
+                () -> customContent.getParsedItems().stream().map(item -> Pair.of(((ItemPropertiesAccessor) ((WithItemProperties) item).getItemProperties()).getId(), item)).toList()
             );
             System.out.println("Added custom content " + FiddleProtocol.getState());
             changeState(ClientModState.RECEIVED_CUSTOM_CONTENT, ClientModState.ADDED_CUSTOM_CONTENT);
         });
         ClientLoginConnectionEvents.INIT.register((handler, client) -> {
+            System.out.println("Init login");
             FiddleProtocol.changeState(ClientModState.IDLE, ClientModState.HANDSHAKE_STARTED);
         });
-        ClientConfigurationConnectionEvents.START.register((handler, client) -> {
+        ClientConfigurationConnectionEvents.INIT.register((handler, client) -> {
+            System.out.println("Init configure");
             // Make sure the state is valid
+            int debugCount = 0;
             while (true) {
                 if (FiddleProtocol.getState() == ClientModState.CLIENT_MOD_DETECTED) {
                     // Force accepting of packs
@@ -102,6 +106,12 @@ public final class FiddleProtocol {
                     break;
                 }
                 if (FiddleProtocol.tryChangeState(ClientModState.HANDSHAKE_STARTED, ClientModState.CLIENT_MOD_NOT_DETECTED)) {
+                    break;
+                }
+                if (FiddleProtocol.getState() == ClientModState.ADDED_CUSTOM_CONTENT && debugCount++ >= 25) {
+                    System.out.println("oof, how did we get here?");
+                    // Temporary debug escape for testing
+                    state.set(ClientModState.CLIENT_MOD_DETECTED);
                     break;
                 }
                 Thread.onSpinWait();
@@ -123,7 +133,15 @@ public final class FiddleProtocol {
         int debugCount = 0;
         while (true) {
             if (FiddleProtocol.getState() == ClientModState.ADDED_CUSTOM_CONTENT) {
-                TemporaryRegistryModifiers.removeCustomContent();
+                System.out.println("Pre-remove");
+                try {
+                    TemporaryRegistryModifiers.removeCustomContent();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                } finally {
+                    System.out.println("Final post-remove");
+                }
                 System.out.println("Post-remove: " + FiddleProtocol.getState());
                 FiddleProtocol.changeState(ClientModState.ADDED_CUSTOM_CONTENT, ClientModState.REMOVED_CUSTOM_CONTENT);
                 break;

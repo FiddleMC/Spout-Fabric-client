@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "org.fiddlemc.fiddle.client.ui.toast.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+    "HideUnsecureServerWarningToastMixin",
+    "IgnoreResourcePackDownloadProgressMixin"
+  ],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

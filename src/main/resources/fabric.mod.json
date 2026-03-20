@@ -24,12 +24,20 @@
     ]
   },
   "mixins": [
-    "fiddle-client.client.moredatadriven.mixins.json",
-    "fiddle-client.impl.moredatadriven.minecraft.type.mixins.json",
     {
       "config": "fiddle-client.client.clientview.mixins.json",
       "environment": "client"
-    }
+    },
+    {
+      "config": "fiddle-client.client.ui.loadingoverlay.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "fiddle-client.client.ui.toast.mixins.json",
+      "environment": "client"
+    },
+    "fiddle-client.client.moredatadriven.mixins.json",
+    "fiddle-client.impl.moredatadriven.minecraft.type.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.18.4",

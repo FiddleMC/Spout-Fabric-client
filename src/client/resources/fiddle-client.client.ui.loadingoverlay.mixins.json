@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "org.fiddlemc.fiddle.client.ui.loadingoverlay.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+    "LoadingOverlayLogoAccessor",
+    "ReplaceLoadingOverlayMixin",
+    "ReplaceMojangLogoAfterTexturesRegisteredMixin"
+  ],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
