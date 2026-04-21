@@ -12,6 +12,6 @@ public final class LogoIdentifier {
         throw new UnsupportedOperationException();
     }
 
-    public static final Identifier IDENTIFIER = Identifier.fromNamespaceAndPath(FiddleNamespace.FIDDLE, "textures/gui/title/spout.png");
+    public static final Identifier IDENTIFIER = Identifier.fromNamespaceAndPath(FiddleNamespace.FIDDLE, "icon.png");
 
 }
