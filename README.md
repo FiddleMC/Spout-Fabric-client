@@ -10,7 +10,7 @@
     when joining a server
   </h3>
 
-[![Discord](https://img.shields.io/discord/1091830813240348732?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/EduvcVmKS7) [![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/FiddleMC/Spout-Fabric-client/actions)
+[![Discord](https://img.shields.io/discord/1091830813240348732?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/EduvcVmKS7) [![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/ModernSpout/Spout-Fabric-client/actions)
 
 </div>
 
@@ -27,7 +27,7 @@ the server's modded blocks and items will be installed automatically.
 
 ## Installation
 
-Download the latest JAR from [GitHub Actions](https://github.com/FiddleMC/Spout-Fabric-client/actions),
+Download the latest JAR from [GitHub Actions](https://github.com/ModernSpout/Spout-Fabric-client/actions),
 under **Artifacts**.
 
 Place the file into the `mods` folder.
@@ -51,4 +51,4 @@ Requires [Fabric API](https://modrinth.com/mod/fabric-api).
 
 ## Adding Spout server-side
 
-* Paper: [Spout server (Paper/Bukkit)](https://github.com/FiddleMC/Spout-Paper-server)
+* Paper: [Spout server (Paper/Bukkit)](https://github.com/ModernSpout/Spout-Paper-server)
