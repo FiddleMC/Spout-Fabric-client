@@ -27,6 +27,6 @@ jobs:
         with:
           name: Spout client mod JAR
           path: |
-            builds/libs/spout-*.jar
-            !builds/libs/spout-*-sources.jar
+            build/libs/spout-*.jar
+            !build/libs/spout-*-sources.jar
           archive: false
