@@ -1,6 +1,5 @@
 package spout.client.fabric.clientview;
 
-import it.unimi.dsi.fastutil.Pair;
 import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
@@ -14,11 +13,8 @@ import net.minecraft.resources.Identifier;
 import spout.client.fabric.clientview.mixin.ClientCommonPacketListenerImplAccessor;
 import spout.client.fabric.moredatadriven.TemporaryRegistryModifiers;
 import spout.common.branding.SpoutNamespace;
-import spout.common.moredatadriven.clientmodprotocol.ClientModCustomContent;
 import spout.common.moredatadriven.clientmodprotocol.ClientModCustomContentPacketPayload;
-import spout.client.fabric.moredatadriven.minecraft.type.WithItemProperties;
-import spout.client.fabric.moredatadriven.minecraft.type.mixin.BlockBehaviourPropertiesAccessor;
-import spout.client.fabric.moredatadriven.minecraft.type.mixin.ItemPropertiesAccessor;
+import spout.common.moredatadriven.clientmodprotocol.ClientModCustomContentReceiving;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,8 +26,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class SpoutProtocol {
 
     private static final Identifier CLIENT_MOD_DETECTION_PACKET_ID = Identifier.fromNamespaceAndPath(SpoutNamespace.SPOUT, "detect_client_mod");
-    private static final int MIN_PROTOCOL_VERSION = 1;
-    private static final int MAX_PROTOCOL_VERSION = 1;
+    private static final int MIN_PROTOCOL_VERSION = 2;
+    private static final int MAX_PROTOCOL_VERSION = 2;
 
     private static final AtomicReference<ClientModState> state = new AtomicReference<>(ClientModState.IDLE);
 
@@ -73,15 +69,7 @@ public final class SpoutProtocol {
         });
         PayloadTypeRegistry.configurationS2C().register(ClientModCustomContentPacketPayload.TYPE, ClientModCustomContentPacketPayload.STREAM_CODEC);
         ClientConfigurationNetworking.registerGlobalReceiver(ClientModCustomContentPacketPayload.TYPE, (payload, context) -> {
-            changeState(ClientModState.CLIENT_MOD_DETECTED, ClientModState.RECEIVED_CUSTOM_CONTENT);
-            // Add the received content
-            TemporaryRegistryModifiers.prepareToAddCustomContent();
-            ClientModCustomContent customContent = payload.getContent();
-            TemporaryRegistryModifiers.addCustomContent(
-                () -> customContent.getParsedBlocks().stream().map(block -> Pair.of(((BlockBehaviourPropertiesAccessor) block.properties()).getId(), block)).toList(),
-                () -> customContent.getParsedItems().stream().map(item -> Pair.of(((ItemPropertiesAccessor) ((WithItemProperties) item).getItemProperties()).getId(), item)).toList()
-            );
-            changeState(ClientModState.RECEIVED_CUSTOM_CONTENT, ClientModState.ADDED_CUSTOM_CONTENT);
+            ClientModCustomContentReceiving.handlePacket(payload);
         });
         ClientLoginConnectionEvents.INIT.register((handler, client) -> {
             SpoutProtocol.changeState(ClientModState.IDLE, ClientModState.HANDSHAKE_STARTED);

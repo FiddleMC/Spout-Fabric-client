@@ -10,7 +10,8 @@
     when joining a server
   </h3>
 
-[![Discord](https://img.shields.io/discord/1091830813240348732?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/EduvcVmKS7) [![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/ModernSpout/Spout-Fabric-client/actions)
+[![Discord](https://img.shields.io/discord/1091830813240348732?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/EduvcVmKS7)
+[![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/0.1.0/spout-0.1.0.jar)
 
 </div>
 
@@ -25,12 +26,17 @@ the server's modded blocks and items will be installed automatically.
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;✓&nbsp;&nbsp;Auto-completion in commands, such as <code>/give</code>
 
+## Download
+
+* [Latest version: 0.1.0 (MC 1.21.11)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/0.1.0/spout-0.1.0.jar)
+* Development versions: download from
+  [Actions](https://github.com/ModernSpout/Spout-Fabric-client/actions/workflows/build.yml),
+  under **Artifacts**
+* [Older releases](https://github.com/ModernSpout/Spout-Fabric-client/releases)
+
 ## Installation
 
-Download the latest JAR from [GitHub Actions](https://github.com/ModernSpout/Spout-Fabric-client/actions),
-under **Artifacts**.
-
-Place the file into the `mods` folder.
+Place the `.jar` file into the `mods` folder.
 
 Requires [Fabric API](https://modrinth.com/mod/fabric-api).
 
