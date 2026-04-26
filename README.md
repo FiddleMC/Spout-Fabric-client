@@ -11,7 +11,7 @@
   </h3>
 
 [![Discord](https://img.shields.io/discord/1091830813240348732?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/EduvcVmKS7)
-[![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/0.1.0/spout-0.1.0.jar)
+[![1.21.11](https://img.shields.io/badge/Latest_version-1.21.11-4fa31a?style=for-the-badge)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/1.0.0/spout-1.0.0.jar)
 
 </div>
 
@@ -28,7 +28,7 @@ the server's modded blocks and items will be installed automatically.
 
 ## Download
 
-* [Latest version: 0.1.0 (MC 1.21.11)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/0.1.0/spout-0.1.0.jar)
+* [Latest version: 1.0.0 (MC 1.21.11)](https://github.com/ModernSpout/Spout-Fabric-client/releases/download/1.0.0/spout-1.0.0.jar)
 * Development versions: download from
   [Actions](https://github.com/ModernSpout/Spout-Fabric-client/actions/workflows/build.yml),
   under **Artifacts**

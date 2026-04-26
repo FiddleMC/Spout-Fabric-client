@@ -29,25 +29,25 @@ public abstract class ReplaceColorsAndSizesOverlayMixin {
     @Mutable
     private static IntSupplier BRAND_BACKGROUND;
 
-    @Shadow
-    @Final
-    @Mutable
-    private static int LOGO_SCALE;
-
-    @Shadow
-    @Final
-    @Mutable
-    private static float LOGO_QUARTER_FLOAT;
-
-    @Shadow
-    @Final
-    @Mutable
-    private static int LOGO_QUARTER;
-
-    @Shadow
-    @Final
-    @Mutable
-    private static int LOGO_HALF;
+    // @Shadow
+    // @Final
+    // @Mutable
+    // private static int LOGO_SCALE;
+    //
+    // @Shadow
+    // @Final
+    // @Mutable
+    // private static float LOGO_QUARTER_FLOAT;
+    //
+    // @Shadow
+    // @Final
+    // @Mutable
+    // private static int LOGO_QUARTER;
+    //
+    // @Shadow
+    // @Final
+    // @Mutable
+    // private static int LOGO_HALF;
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void spout$modifyConstants(CallbackInfo ci) {
@@ -57,10 +57,10 @@ public abstract class ReplaceColorsAndSizesOverlayMixin {
         BRAND_BACKGROUND = () -> SwitchOverlayStyle.isSpout() ? 0xFF111111 : oldBrandBackground.getAsInt();
 
         // Logo sizing
-        LOGO_SCALE = 320;
-        LOGO_QUARTER = LOGO_SCALE / 4;
-        LOGO_HALF = LOGO_SCALE / 2;
-        LOGO_QUARTER_FLOAT = (float) LOGO_QUARTER;
+        // LOGO_SCALE = 320;
+        // LOGO_QUARTER = LOGO_SCALE / 4;
+        // LOGO_HALF = LOGO_SCALE / 2;
+        // LOGO_QUARTER_FLOAT = (float) LOGO_QUARTER;
 
     }
 
