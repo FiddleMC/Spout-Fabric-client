@@ -34,11 +34,11 @@ public enum ClientModState {
      */
     CLIENT_MOD_NOT_DETECTED,
     /**
-     * Custom content has been received from the server.
+     * Some (but potentially not all) custom content has been received from the server.
      */
     RECEIVED_CUSTOM_CONTENT,
     /**
-     * Received custom content has been added.
+     * All custom content has been received and added (e.g. registered).
      */
     ADDED_CUSTOM_CONTENT,
     /**

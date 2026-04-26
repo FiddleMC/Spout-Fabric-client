@@ -14,7 +14,7 @@ public abstract class HideUnsecureServerWarningToastMixin {
     @Inject(method = "addToast", at = @At("HEAD"), cancellable = true)
     private void onAddToast(Toast toast, CallbackInfo info) {
         if (toast instanceof SystemToast sys && sys.getToken() == SystemToast.SystemToastId.UNSECURE_SERVER_WARNING) {
-            info.cancel();
+            info.cancel(); // TODO make configurable
         }
     }
 
