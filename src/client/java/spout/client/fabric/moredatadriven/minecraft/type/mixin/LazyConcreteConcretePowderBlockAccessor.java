@@ -1,16 +1,16 @@
 package spout.client.fabric.moredatadriven.minecraft.type.mixin;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BrushableBlock;
+import net.minecraft.world.level.block.ConcretePowderBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(BrushableBlock.class)
-public interface LazyTurnsIntoBrushableBlockAccessor {
+@Mixin(ConcretePowderBlock.class)
+public interface LazyConcreteConcretePowderBlockAccessor {
 
     @Mutable
-    @Accessor("turnsInto")
-    void setTurnsInto(Block turnsInto);
+    @Accessor("concrete")
+    void setConcrete(Block concrete);
 
 }
